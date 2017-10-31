@@ -1,0 +1,8 @@
+C:\Users\SNP\Desktop\OleDbLib\OleDbLib\bin\Debug\OleDbLib.dll
+C:\Users\SNP\Desktop\OleDbLib\OleDbLib\bin\Debug\OleDbLib.pdb
+C:\Users\SNP\Desktop\OleDbLib\OleDbLib\bin\Debug\OleDbLib.xml
+C:\Users\SNP\Desktop\OleDbLib\OleDbLib\obj\Debug\OleDbLib.Resources.resources
+C:\Users\SNP\Desktop\OleDbLib\OleDbLib\obj\Debug\OleDbLib.vbproj.GenerateResource.Cache
+C:\Users\SNP\Desktop\OleDbLib\OleDbLib\obj\Debug\OleDbLib.dll
+C:\Users\SNP\Desktop\OleDbLib\OleDbLib\obj\Debug\OleDbLib.xml
+C:\Users\SNP\Desktop\OleDbLib\OleDbLib\obj\Debug\OleDbLib.pdb
