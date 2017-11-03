@@ -33,7 +33,7 @@ Public Class OleDb
 
         Dim cmd As OleDbCommand = New OleDbCommand(sql)
 
-        'Adicionando os parâmetros aos OleDbCommand
+        'Adicionando os parâmetros ao OleDbCommand
         For i As Integer = 0 To a.Count - 1
             cmd.Parameters.AddWithValue(a(i), itemsToInsert(i))
         Next
@@ -60,7 +60,7 @@ Public Class OleDb
 
         Dim cmd As OleDbCommand = New OleDbCommand(sql)
 
-        'Adicionando os parâmetros aos OleDbCommand
+        'Adicionando os parâmetros ao OleDbCommand
         For i As Integer = 0 To a.Count - 1
             cmd.Parameters.AddWithValue(a(i), itemsToInsert(i))
         Next
@@ -100,7 +100,7 @@ Public Class OleDb
 
         Dim cmd As OleDbCommand = New OleDbCommand(sql)
 
-        'Adicionando os parâmetros aos OleDbCommand
+        'Adicionando os parâmetros ao OleDbCommand
         For i As Integer = 0 To bankColumns.Count - 1
             cmd.Parameters.AddWithValue(a(i), bankColumns(i))
         Next
@@ -142,7 +142,7 @@ Public Class OleDb
         Dim con As OleDbConnection = New OleDbConnection(cS)
         Dim cmd As OleDbCommand = New OleDbCommand(sql, con)
 
-        'Adicionando os parâmetros aos OleDbCommand
+        'Adicionando os parâmetros ao OleDbCommand
         For i As Integer = 0 To whereBankColumns.Count - 1
             cmd.Parameters.AddWithValue(a(i), whereItems(i))
         Next
