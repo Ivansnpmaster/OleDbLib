@@ -161,7 +161,7 @@ Public Class OleDb
 
     End Function
 
-    Private Function ExecuteCommand(cmd As OleDbCommand) As Boolean
+    Public Function ExecuteCommand(cmd As OleDbCommand) As Boolean
 
         Dim success As Boolean = True
         Dim con As OleDbConnection = New OleDbConnection(cS)
