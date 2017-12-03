@@ -40,7 +40,6 @@ Public Class OleDb
         Next
 
         Return ExecuteCommand(cmd)
-
     End Function
 
     Public Function DeleteData(tableName As String, whereBankColumns() As String, operators() As String, itemsToDelete() As Object) As Boolean
@@ -69,7 +68,6 @@ Public Class OleDb
         Next
 
         Return ExecuteCommand(cmd)
-
     End Function
 
     Public Function UpdateData(tableName As String, bankColumns() As String, itemsToInsert() As Object, whereBankColumns() As String, operators() As String, whereItems() As Object) As Boolean
@@ -112,7 +110,6 @@ Public Class OleDb
         Next
 
         Return ExecuteCommand(cmd)
-
     End Function
 
     Public Function SelectData(tableName As String, bankColumns() As String, whereBankColumns() As String, operators() As String, whereItems() As Object) As DataTable
@@ -156,21 +153,11 @@ Public Class OleDb
             da.Fill(dt)
 
         Catch ex As Exception
-
-            Dim dterror As New DataTable
-
-            dterror.Columns.Add("ei")
-            dterror.Rows.Add(ex.Message + vbNewLine + sql)
-
-            con.Close()
-            Return dterror
-
         Finally
-            con.Close()
+            con.Dispose()
         End Try
         
         Return dt
-
     End Function
 
     Public Function ExecuteCommand(cmd As OleDbCommand) As Boolean
@@ -194,7 +181,6 @@ Public Class OleDb
         End Try
 
         Return success
-
     End Function
 
 End Class
