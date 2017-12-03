@@ -22,7 +22,8 @@ Public Class OleDb
             sql += a(i) + ", "
         Next
         'Adicionando o último elemento
-        sql += a(a.Count - 1) + ") VALUES ("
+        a(a.Count - 1) = "@" + bankColumns(a.Count - 1)
+        sql += bankColumns(bankColumns.Count - 1) + ") VALUES ("
 
         'Adicionando os parâmetros com o @
         For i As Integer = 0 To a.Count - 2
@@ -42,27 +43,29 @@ Public Class OleDb
 
     End Function
 
-    Public Function DeleteData(tableName As String, bankColumns() As String, operators() As String, itemsToInsert() As Object) As Boolean
+    Public Function DeleteData(tableName As String, whereBankColumns() As String, operators() As String, itemsToDelete() As Object) As Boolean
 
         'String de comando
         Dim sql As String = String.Format("DELETE FROM {0} WHERE ", tableName)
         'String para o adicionar de parâmetros no OleDbCommand
-        Dim a(bankColumns.Count - 1) As String
+        Dim a(whereBankColumns.Count - 1) As String
 
         'Montando a string de comando sem o último elemento (i até -2)
-        For i As Integer = 0 To bankColumns.Count - 2
+        For i As Integer = 0 To whereBankColumns.Count - 2
             'Adicionando o parâmetro i para poder colocar a mesma coluna da database mais de uma vez no WHERE
-            a(i) = String.Format("@{0}{1}", bankColumns(i), i)
-            sql += String.Format("{0} {1} {2} AND ", bankColumns(i), operators(i), a(i))
+            a(i) = String.Format("@{0}{1}", whereBankColumns(i), i)
+            sql += String.Format("{0} {1} {2} AND ", whereBankColumns(i), operators(i), a(i))
         Next
+
         'Adicionando o último elemento
-        sql += String.Format("{0} {1} {2}", bankColumns(a.Count - 1), operators(a.Count - 1), a(a.Count - 1))
+        a(a.Count - 1) = whereBankColumns(whereBankColumns.Count - 1) + (whereBankColumns.Count - 1).ToString()
+        sql += String.Format("{0} {1} {2}", whereBankColumns(a.Count - 1), operators(a.Count - 1), a(a.Count - 1))
 
         Dim cmd As OleDbCommand = New OleDbCommand(sql)
 
         'Adicionando os parâmetros ao OleDbCommand
         For i As Integer = 0 To a.Count - 1
-            cmd.Parameters.AddWithValue(a(i), itemsToInsert(i))
+            cmd.Parameters.AddWithValue(a(i), itemsToDelete(i))
         Next
 
         Return ExecuteCommand(cmd)
@@ -124,17 +127,17 @@ Public Class OleDb
             sql += bankColumns(i) + ", "
         Next
         'Adicionando o último elemento
-        sql += String.Format("{0} FROM {1} WHERE", bankColumns(bankColumns.Count - 1), tableName)
+        sql += String.Format("{0} FROM {1} WHERE ", bankColumns(bankColumns.Count - 1), tableName)
 
         'Adicionando na string de comando as condições com @'s
         For i As Integer = 0 To whereBankColumns.Count - 2
-            a(i) = String.Format("@{0}{1}", whereBankColumns, i)
-            sql += String.Format("{0} {1} {2}", whereBankColumns(i), operators(i), a(i))
+            a(i) = String.Format("@{0}{1}", whereBankColumns(i), i)
+            sql += String.Format("{0} {1} {2} AND ", whereBankColumns(i), operators(i), a(i))
         Next
 
         Dim j As Integer = whereBankColumns.Count - 1
         'Adicionando o último elemento
-        a(j) = String.Format("@{0}{1}", whereBankColumns, j)
+        a(j) = String.Format("@{0}{1}", whereBankColumns(j), j)
         sql += String.Format("{0} {1} {2}", whereBankColumns(j), operators(j), a(j))
 
         Dim dt As DataTable = New DataTable
@@ -153,6 +156,15 @@ Public Class OleDb
             da.Fill(dt)
 
         Catch ex As Exception
+
+            Dim dterror As New DataTable
+
+            dterror.Columns.Add("ei")
+            dterror.Rows.Add(ex.Message + vbNewLine + sql)
+
+            con.Close()
+            Return dterror
+
         Finally
             con.Close()
         End Try
